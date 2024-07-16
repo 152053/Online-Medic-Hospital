@@ -19,6 +19,8 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'phone_number' => 'required|string|max:15',
+            'usertype' => 'required|string|in:admin,doctor,patient',
+            'username' => 'required|string|max:255|unique:users',
         ]);
 
         if ($validator->fails()) {
@@ -27,16 +29,18 @@ class RegisterController extends Controller
 
         // Create a new user
         $user = User::create([
-            'name' => $request->first_name.''.$request->last_name,
+            'name' => $request->first_name . ' ' . $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone_number' => $request->phone_number,
+            'role' => $request->usertype,
+            'username' => $request->username,
         ]);
 
         // Log the user in
         auth()->login($user);
 
         // Redirect to a specific route (e.g., home)
-        return redirect()->route('register')->with('success', 'Registration successful!');
+        return redirect()->route('login')->with('success', 'Registration successful!');
     }
 }

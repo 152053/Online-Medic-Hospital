@@ -1,0 +1,36 @@
+/* public/css/image.css */
+
+.about-section {
+    margin: 50px 0;
+    background: url('/images/hospital-background.png') no-repeat center center fixed;
+    background-size: cover;
+    color: hwb(0 100% 0% / 0.189);
+    padding: 50px;
+    border-radius: 15px;
+}
+
+.about-section h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.about-section img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+    border-radius: 15px;
+}
+
+.about-section .text-content {
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.7); 
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.about-section .text-content h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}

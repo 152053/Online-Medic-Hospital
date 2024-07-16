@@ -10,7 +10,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-        @if(session('success'))
+            @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
@@ -22,27 +22,26 @@
             @endif
             <div class="card">
                 <div class="card-header text-center">
-                    <h4>LogIn</h4>
+                    <h4>Login</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('saveLogIn') }}" method="POST">
+                    <form method="POST" action="{{ route('saveLogIn') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="user_name">User Name</label>
-                            <input type="text" class="form-control @error('User_name') is-invalid @enderror" id="User_name" name="User_name" value="{{ old('User_name') }}" required>
-                            @error('User_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <label for="user_name">Username</label>
+                            <input type="text" name="user_name" class="form-control" id="user_name" value="{{ old('user_name') }}">
+                            @error('user_name')
+                                <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                            <input type="password" name="password" class="form-control" id="password">
                             @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            </div>
-                        <button type="submit" class="btn btn-primary btn-block" onclick="pdashboard.php">login</button>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </form>
                 </div>
             </div>

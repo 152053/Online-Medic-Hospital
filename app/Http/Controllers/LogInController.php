@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Username;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LogInController extends Controller
@@ -14,7 +13,7 @@ class LogInController extends Controller
     {
         // Validate the request data
         $validator = Validator::make($request->all(), [
-            'user_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255', // Assuming 'username' field is used for login
             'password' => 'required|string|min:8',
         ]);
 
@@ -22,16 +21,18 @@ class LogInController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // LogIn new/existing user
-        $username = UserName::create([
-            'User_name' => $request->first_name,
-            'password' => Hash::make($request->password),
-        ]);
+        // Attempt to authenticate the user
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            // Authentication passed
+            return redirect()->intended(route('dashboard')); // Redirect to intended URL or dashboard
+        } else {
+            // Authentication failed
+            return back()->withInput()->withErrors(['username' => 'Invalid credentials.']);
+        }
+    }
 
-        // Log the user in
-        auth()->login($username);
-
-        // Redirect to a specific route (e.g., home)
-        return redirect()->route('login')->with('success', 'LogIn successful!');
+    public function showLoginForm()
+    {
+        return view('login');
     }
 }
